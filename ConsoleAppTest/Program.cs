@@ -7,11 +7,10 @@ namespace ConsoleAppTest
     {
         static void Main(string[] args)
         {
-            var config = new DiamondSquareConfig(2);
+            var config = new DiamondSquareConfig(3);
             var generator = new DiamondSquare(config);
 
             var a = generator.Generate();
-            Debug.WriteLine(a);
         }
     }
 }

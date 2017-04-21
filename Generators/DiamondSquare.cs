@@ -69,6 +69,11 @@ namespace Generators
             _terra[x, y] = average + offset;
         }
 
+        /// <summary>
+        /// Get random offset. Value depends on current step of divide.
+        /// </summary>
+        /// <param name="stepSize"></param>
+        /// <returns></returns>
         private float _getOffset(int stepSize)
         {
             var offset = stepSize / _config.Size * _random.Next(-_config.Size, _config.Size);
@@ -76,16 +81,18 @@ namespace Generators
             return sign * (float)Math.Pow(Math.Abs(offset), 1 / Math.Sqrt(_config.Persistence));
         }
 
+        /// <summary>
+        /// Getting height of cell by indexes. Random if cell out of map.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="stepSize"></param>
+        /// <returns></returns>
         private float _getCellHeight(int x, int y, int stepSize = 0)
         {
-            try
-            {
-                return _terra[x, y];
-            }
-            catch (IndexOutOfRangeException)
-            {
+            if (x < 0 || y < 0 || x >= _config.Size || y >= _config.Size)
                 return _getOffset(stepSize);
-            }
+            return _terra[x, y];
         }
 
     }

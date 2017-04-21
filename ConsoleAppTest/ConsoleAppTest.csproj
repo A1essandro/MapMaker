@@ -54,9 +54,9 @@
       <Project>{47f27e01-b26a-4f16-a074-2858965d61b3}</Project>
       <Name>Generators</Name>
     </ProjectReference>
-    <ProjectReference Include="..\map-maker.csproj">
+    <ProjectReference Include="..\MapMaker.csproj">
       <Project>{792a19db-18f6-4dfa-84e3-fe66bdf5acbe}</Project>
-      <Name>map-maker</Name>
+      <Name>MapMaker</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

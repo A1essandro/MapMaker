@@ -40,7 +40,6 @@
     <Compile Include="DiamondSquare.cs" />
     <Compile Include="DiamondSquareConfig.cs" />
     <Compile Include="GeneratorAlgorithm.cs" />
-    <Compile Include="IGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
