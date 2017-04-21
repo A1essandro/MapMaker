@@ -7,9 +7,11 @@
 #### [Diamond-Square](https://en.wikipedia.org/wiki/Diamond-square_algorithm)
 
 You can use class [DiamondSquare](Generators/DiamondSquare.cs) like in example:
-```
-	var config = new DiamondSquareConfig(2);
-	var generator = new DiamondSquare(config);
+```cs
+byte sizePower = 3; //result size = pow(2, sizePower) + 1
+float persistence = 1.1;
+var config = new DiamondSquareConfig(sizePower, persistence /*optional*/);
+var generator = new DiamondSquare(config);
 
-	float[,] a = generator.Generate();
+float[,] a = generator.Generate();
 ```
