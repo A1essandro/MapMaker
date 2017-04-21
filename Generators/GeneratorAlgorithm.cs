@@ -15,7 +15,12 @@ namespace Generators
             _config = config;
         }
 
-        abstract public Task<float[,]> Generate();
+        abstract public Task<float[,]> GenerateAsync();
+
+        public float[,] Generate()
+        {
+            return GenerateAsync().GetAwaiter().GetResult();
+        }
 
     }
 

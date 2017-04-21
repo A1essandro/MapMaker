@@ -71,11 +71,11 @@ namespace Tests.Generators
             var generatorEq2 = new DiamondSquare(configEq2);
             var generatorNotEq = new DiamondSquare(configNotEq);
 
-            var mapEq1 = generatorEq1.Generate();
+            var mapEq1 = generatorEq1.GenerateAsync();
             var mapEq2 = generatorEq2.Generate();
-            var mapnotEq = generatorNotEq.Generate();
+            var mapnotEq = generatorNotEq.GenerateAsync();
 
-            Assert.AreEqual(mapEq2.GetAwaiter().GetResult()[1, 2],
+            Assert.AreEqual(mapEq2[1, 2],
                 mapEq1.GetAwaiter().GetResult()[1, 2]);
 
             Assert.AreNotEqual(mapnotEq.GetAwaiter().GetResult()[1, 2],

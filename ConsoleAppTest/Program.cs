@@ -14,7 +14,7 @@ namespace ConsoleAppTest
             
             Debug.WriteLine("start");
             stopWatch.Start();
-            var a = generator.Generate();
+            var a = generator.GenerateAsync();
             Debug.WriteLine("check " + stopWatch.Elapsed);
 
             var t = a.GetAwaiter().GetResult();

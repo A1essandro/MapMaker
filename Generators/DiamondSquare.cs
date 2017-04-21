@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Generators
@@ -11,7 +10,7 @@ namespace Generators
         {
         }
 
-        public override async Task<float[,]> Generate()
+        public override async Task<float[,]> GenerateAsync()
         {
             _terra = new float[_config.Size, _config.Size];
 
