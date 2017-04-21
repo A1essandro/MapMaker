@@ -1,4 +1,6 @@
-﻿namespace Generators
+﻿using System.Threading.Tasks;
+
+namespace Generators
 {
 
     public abstract class GeneratorAlgorithm<TConfig>
@@ -13,7 +15,7 @@
             _config = config;
         }
 
-        abstract public float[,] Generate();
+        abstract public Task<float[,]> Generate();
 
     }
 

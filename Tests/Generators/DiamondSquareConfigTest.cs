@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Generators;
+using System.Threading.Tasks;
 
 namespace Tests.Generators
 {
@@ -74,8 +75,11 @@ namespace Tests.Generators
             var mapEq2 = generatorEq2.Generate();
             var mapnotEq = generatorNotEq.Generate();
 
-            Assert.AreEqual(mapEq2[1, 2], mapEq1[1, 2]);
-            Assert.AreNotEqual(mapnotEq[1, 2], mapEq1[1, 2]);
+            Assert.AreEqual(mapEq2.GetAwaiter().GetResult()[1, 2],
+                mapEq1.GetAwaiter().GetResult()[1, 2]);
+
+            Assert.AreNotEqual(mapnotEq.GetAwaiter().GetResult()[1, 2],
+                mapEq1.GetAwaiter().GetResult()[1, 2]);
 
             //Note: if you use one DiamondSquareConfig reference for different generators - it will not work:
             //var config = new DiamondSquareConfig(3, 1, new System.Random(5));
