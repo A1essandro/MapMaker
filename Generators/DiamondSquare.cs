@@ -4,11 +4,9 @@ namespace Generators
 {
     public class DiamondSquare : GeneratorAlgorithm<DiamondSquareConfig>
     {
-        private Random _random;
 
         public DiamondSquare(DiamondSquareConfig config) : base(config)
         {
-            _random = new Random();
         }
 
         public override float[,] Generate()
@@ -76,7 +74,7 @@ namespace Generators
         /// <returns></returns>
         private float _getOffset(int stepSize)
         {
-            var offset = stepSize / _config.Size * _random.Next(-_config.Size, _config.Size);
+            var offset = stepSize / _config.Size * _config.Random.Next(-_config.Size, _config.Size);
             var sign = offset < 0 ? -1 : 1;
             return sign * (float)Math.Pow(Math.Abs(offset), 1 / Math.Sqrt(_config.Persistence));
         }

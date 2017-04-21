@@ -58,5 +58,30 @@ namespace Tests.Generators
             var config = new DiamondSquareConfig(3);
             Assert.AreEqual(9, config.Size);
         }
+
+        [TestMethod]
+        public void TestRandomSeed()
+        {
+            var configEq1 = new DiamondSquareConfig(3, 1, new System.Random(5));
+            var configEq2 = new DiamondSquareConfig(3, 1, new System.Random(5));
+            var configNotEq = new DiamondSquareConfig(3, 1, new System.Random(10));
+
+            var generatorEq1 = new DiamondSquare(configEq1);
+            var generatorEq2 = new DiamondSquare(configEq2);
+            var generatorNotEq = new DiamondSquare(configNotEq);
+
+            var mapEq1 = generatorEq1.Generate();
+            var mapEq2 = generatorEq2.Generate();
+            var mapnotEq = generatorNotEq.Generate();
+
+            Assert.AreEqual(mapEq2[1, 2], mapEq1[1, 2]);
+            Assert.AreNotEqual(mapnotEq[1, 2], mapEq1[1, 2]);
+
+            //Note: if you use one DiamondSquareConfig reference for different generators - it will not work:
+            //var config = new DiamondSquareConfig(3, 1, new System.Random(5));
+            //var generator1 = new DiamondSquare(config);
+            //var generator2 = new DiamondSquare(config);
+            // generator1.Generate()[x, y] != generator2.Generate()[x, y] !!!;
+        }
     }
 }
