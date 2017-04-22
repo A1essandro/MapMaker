@@ -15,8 +15,16 @@ namespace Generators
             _config = config;
         }
 
+        /// <summary>
+        /// Async implementation of Generate
+        /// </summary>
+        /// <returns>Task will returns double array of float</returns>
         abstract public Task<float[,]> GenerateAsync();
 
+        /// <summary>
+        /// Non-async implementation of Generate
+        /// </summary>
+        /// <returns>Double array of float</returns>
         public float[,] Generate()
         {
             return GenerateAsync().GetAwaiter().GetResult();

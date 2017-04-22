@@ -6,10 +6,16 @@ namespace Generators
     public class DiamondSquare : GeneratorAlgorithm<DiamondSquareConfig>
     {
 
+        #region Public
+
         public DiamondSquare(DiamondSquareConfig config) : base(config)
         {
         }
 
+        /// <summary>
+        /// Async implementation of Generate
+        /// </summary>
+        /// <returns>Task will returns double array of float</returns>
         public override async Task<float[,]> GenerateAsync()
         {
             _terra = new float[_config.Size, _config.Size];
@@ -24,6 +30,10 @@ namespace Generators
 
             return _terra;
         }
+
+        #endregion
+
+        #region Main algorithm methods
 
         private async void _divide(int stepSize)
         {
@@ -68,6 +78,10 @@ namespace Generators
             _terra[x, y] = average + offset;
         }
 
+        #endregion
+
+        #region Additional methods
+
         /// <summary>
         /// Get random offset. Value depends on current step of divide.
         /// </summary>
@@ -97,6 +111,8 @@ namespace Generators
                 return await _getOffset(stepSize);
             return _terra[x, y];
         }
+
+        #endregion
 
     }
 }
