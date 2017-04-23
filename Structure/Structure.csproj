@@ -38,8 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HeightmapLayer.cs" />
-    <Compile Include="Cell.cs" />
-    <Compile Include="ILayer.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

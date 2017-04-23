@@ -6,24 +6,25 @@ namespace Structure
     public class Map
     {
 
-        public IDictionary<Type, Layer> Layers;
+        public Dictionary<Type, object> _layers;
 
-        public void AddLayer(Layer layer)
+        public void AddLayer<TLayer, TCell>(TLayer layer) 
+            where TLayer : Layer<TCell>
         {
-            var type = layer.GetType();
-            Layers.Add(type, layer);
+            Type key = typeof(TLayer);
+            _layers.Add(key, layer);
         }
 
-        public TLayer GetLayer<TLayer>()
-            where TLayer : Layer
+        public bool HasLayer<TLayer, TCell>()
+            where TLayer : Layer<TCell>
         {
-            return (TLayer)Layers[typeof(TLayer)];
+            return _layers.ContainsKey(typeof(TLayer));
         }
 
-        public bool HasLayer<TLayer>()
-            where TLayer : Layer
+        public TLayer GetLayer<TLayer, TCell>() 
+            where TLayer : Layer<TCell>
         {
-            return Layers.Keys.Contains(typeof(TLayer));
+            return _layers[typeof(TLayer)] as TLayer;
         }
 
     }

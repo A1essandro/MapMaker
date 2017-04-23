@@ -1,18 +1,18 @@
 ﻿namespace Structure
 {
-    public abstract class Layer
+    public abstract class Layer<TCell>
     {
 
-        protected Cell[,] Cells { get; private set; } 
+        private TCell[,] Cells { get; set; } 
 
-        public Layer(Cell[,] cells)
+        public Layer(TCell[,] cells)
         {
             Cells = cells;
         }
 
-        public TReturn GetCell<TReturn>(int x, int y)
+        public TCell GetCell<TReturn>(int x, int y)
         {
-            return (TReturn)Cells[x, y].Data;
+            return Cells[x, y];
         }
 
     }
