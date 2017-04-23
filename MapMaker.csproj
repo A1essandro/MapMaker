@@ -46,9 +46,6 @@
     <Content Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".travis.yml">
-      <Generator>SettingsSingleFileGenerator</Generator>
-    </None>
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>

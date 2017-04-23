@@ -1,7 +1,0 @@
-﻿language: csharp
-solution: map-maker.sln
-install:
-  - sudo apt-get install -y gtk-sharp2
-  - nuget restore map-maker.sln
-script:
-- xbuild map-maker.sln
