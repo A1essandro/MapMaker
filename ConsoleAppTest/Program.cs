@@ -15,7 +15,7 @@ namespace ConsoleAppTest
             var m = new Map();
             m.AddLayer<HeightmapLayer, float>(new HeightmapLayer(t));
             var layer = m.GetLayer<HeightmapLayer, float>();
-            var c = layer.GetCell<int>(0, 0);
+            var c = layer.GetCell(0, 0);
         }
 
     }

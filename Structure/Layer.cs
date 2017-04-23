@@ -5,12 +5,12 @@
 
         private TCell[,] Cells { get; set; } 
 
-        public Layer(TCell[,] cells)
+        protected Layer(TCell[,] cells)
         {
             Cells = cells;
         }
 
-        public TCell GetCell<TReturn>(int x, int y)
+        public TCell GetCell(int x, int y)
         {
             return Cells[x, y];
         }
