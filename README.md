@@ -1,6 +1,6 @@
 # MapMaker
 
-[https://ci.appveyor.com/api/projects/status/github/a1essandro/MapMaker?branch=master&svg=true](https://ci.appveyor.com/api/projects/status/github/a1essandro/MapMaker?branch=master&svg=true)
+[![AppVeyor Builds]https://ci.appveyor.com/api/projects/status/github/a1essandro/MapMaker?branch=master&svg=true](https://ci.appveyor.com/api/projects/status/github/a1essandro/MapMaker?branch=master&svg=true)
 
 ## Algorithms
 
