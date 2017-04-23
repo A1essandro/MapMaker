@@ -6,13 +6,12 @@ namespace Structure
     public class Map
     {
 
-        public Dictionary<Type, object> _layers;
+        private Dictionary<Type, object> _layers;
 
         public void AddLayer<TLayer, TCell>(TLayer layer) 
             where TLayer : Layer<TCell>
         {
-            Type key = typeof(TLayer);
-            _layers.Add(key, layer);
+            _layers.Add(typeof(TLayer), layer);
         }
 
         public bool HasLayer<TLayer, TCell>()

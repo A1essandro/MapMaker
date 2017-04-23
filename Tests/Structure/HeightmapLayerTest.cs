@@ -27,5 +27,41 @@ namespace Tests.Structure
 
             Assert.AreEqual(heights[0, 1], layer.GetCell(0, 1));           
         }
+
+        [TestMethod]
+        public void TestMinHeight()
+        {
+            var heights = heightsTask.GetAwaiter().GetResult();
+            var layer = new HeightmapLayer(heights);
+
+            float minHeight = float.MaxValue;
+            foreach(var h in layer)
+            {
+                if(h < minHeight)
+                {
+                    minHeight = h;
+                }
+            }
+
+            Assert.AreEqual(minHeight, layer.MinHeight);
+        }
+
+        [TestMethod]
+        public void TestMaxHeight()
+        {
+            var heights = heightsTask.GetAwaiter().GetResult();
+            var layer = new HeightmapLayer(heights);
+
+            float maxHeight = float.MinValue;
+            foreach (var h in layer)
+            {
+                if (h > maxHeight)
+                {
+                    maxHeight = h;
+                }
+            }
+
+            Assert.AreEqual(maxHeight, layer.MaxHeight);
+        }
     }
 }
