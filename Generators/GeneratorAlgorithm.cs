@@ -7,19 +7,19 @@ namespace Generators
         where TConfig : class
     {
 
-        protected float[,] _terra;
-        protected TConfig _config;
+        protected float[,] Terra;
+        protected TConfig Config;
 
-        public GeneratorAlgorithm(TConfig config)
+	    protected GeneratorAlgorithm(TConfig config)
         {
-            _config = config;
+            Config = config;
         }
 
         /// <summary>
         /// Async implementation of Generate
         /// </summary>
         /// <returns>Task will returns double array of float</returns>
-        abstract public Task<float[,]> GenerateAsync();
+        public abstract Task<float[,]> GenerateAsync();
 
         /// <summary>
         /// Non-async implementation of Generate

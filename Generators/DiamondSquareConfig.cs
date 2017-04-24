@@ -15,10 +15,10 @@ namespace Generators
         {
             Size = PowerToSize(sizePower);
             Persistence = persistence;
-            Random = random != null ? random : new Random();
+            Random = random ?? new Random();
         }
 
-        static public int PowerToSize(int sizePower)
+        public static int PowerToSize(int sizePower)
         {
             return (int)Math.Pow(2, sizePower) + 1;
         }
