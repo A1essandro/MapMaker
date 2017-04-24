@@ -27,7 +27,7 @@ namespace Generators
         /// <returns>Double array of float</returns>
         public float[,] Generate()
         {
-            return GenerateAsync().GetAwaiter().GetResult();
+            return GenerateAsync().Result;
         }
 
     }

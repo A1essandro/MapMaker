@@ -21,12 +21,15 @@ namespace Generators
             Terra = new float[Config.Size, Config.Size];
 
             var last = Config.Size - 1;
-            Terra[0, 0] = await _getOffset(Config.Size);
-            Terra[0, last] = await _getOffset(Config.Size);
-            Terra[last, 0] = await _getOffset(Config.Size);
-            Terra[last, last] = await _getOffset(Config.Size);
+            Terra[0, 0] = _getOffset(Config.Size);
+            Terra[0, last] = _getOffset(Config.Size);
+            Terra[last, 0] = _getOffset(Config.Size);
+            Terra[last, last] = _getOffset(Config.Size);
 
-            _divide(Config.Size);
+            await Task.Run(() =>
+            {
+                _divide(Config.Size);
+            });
 
             return Terra;
         }
@@ -35,7 +38,7 @@ namespace Generators
 
         #region Main algorithm methods
 
-        private async void _divide(int stepSize)
+        private void _divide(int stepSize)
         {
             var half = stepSize / 2;
 
@@ -46,34 +49,34 @@ namespace Generators
             {
                 for (var y = half; y < Config.Size; y += stepSize)
                 {
-                    await _square(x, y, half, await _getOffset(stepSize));
+                    _square(x, y, half, _getOffset(stepSize));
                 }
             }
 
             _divide(half);
         }
 
-        private async Task _square(int x, int y, int size, float offset)
+        private void _square(int x, int y, int size, float offset)
         {
-            var a = await _getCellHeight(x - size, y - size, size);
-            var b = await _getCellHeight(x + size, y + size, size);
-            var c = await _getCellHeight(x - size, y + size, size);
-            var d = await _getCellHeight(x + size, y - size, size);
+            var a = _getCellHeight(x - size, y - size, size);
+            var b = _getCellHeight(x + size, y + size, size);
+            var c = _getCellHeight(x - size, y + size, size);
+            var d = _getCellHeight(x + size, y - size, size);
             var average = (a + b + c + d) / 4;
             Terra[x, y] = average + offset;
-            await _diamond(x, y - size, size);
-            await _diamond(x - size, y, size);
-            await _diamond(x, y + size, size);
-            await _diamond(x + size, y, size);
+            _diamond(x, y - size, size);
+            _diamond(x - size, y, size);
+            _diamond(x, y + size, size);
+            _diamond(x + size, y, size);
         }
 
-        private async Task _diamond(int x, int y, int size)
+        private void _diamond(int x, int y, int size)
         {
-            var offset = await _getOffset(size);
-            var a = await _getCellHeight(x, y - size, size);
-            var b = await _getCellHeight(x, y + size, size);
-            var c = await _getCellHeight(x - size, y, size);
-            var d = await _getCellHeight(x + size, y, size);
+            var offset = _getOffset(size);
+            var a = _getCellHeight(x, y - size, size);
+            var b = _getCellHeight(x, y + size, size);
+            var c = _getCellHeight(x - size, y, size);
+            var d = _getCellHeight(x + size, y, size);
             var average = (a + b + c + d) / 4;
             Terra[x, y] = average + offset;
         }
@@ -87,15 +90,11 @@ namespace Generators
         /// </summary>
         /// <param name="stepSize"></param>
         /// <returns></returns>
-        private async Task<float> _getOffset(int stepSize)
+        private float _getOffset(int stepSize)
         {
-            return await Task.Run(() =>
-             {
-                 var offset = stepSize / Config.Size * Config.Random.Next(-Config.Size, Config.Size);
-                 var sign = offset < 0 ? -1 : 1;
-                 return sign * (float)Math.Pow(Math.Abs(offset), 1 / Math.Sqrt(Config.Persistence));
-             });
-
+            var offset = stepSize / Config.Size * Config.Random.Next(-Config.Size, Config.Size);
+            var sign = offset < 0 ? -1 : 1;
+            return sign * (float)Math.Pow(Math.Abs(offset), 1 / Math.Sqrt(Config.Persistence));
         }
 
         /// <summary>
@@ -105,10 +104,10 @@ namespace Generators
         /// <param name="y"></param>
         /// <param name="stepSize"></param>
         /// <returns></returns>
-        private async Task<float> _getCellHeight(int x, int y, int stepSize = 0)
+        private float _getCellHeight(int x, int y, int stepSize = 0)
         {
             if (x < 0 || y < 0 || x >= Config.Size || y >= Config.Size)
-                return await _getOffset(stepSize);
+                return _getOffset(stepSize);
             return Terra[x, y];
         }
 

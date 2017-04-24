@@ -6,7 +6,7 @@ namespace Structure
     public class Map
     {
 
-        private Dictionary<Type, object> _layers;
+        private Dictionary<Type, object> _layers = new Dictionary<Type, object>();
 
         public void AddLayer<TLayer, TCell>(TLayer layer) 
             where TLayer : Layer<TCell>
