@@ -36,13 +36,9 @@ namespace Generators
 
         private void _divide(int stepSize)
         {
-            while (true)
+            int half;
+            while ((half = stepSize / 2) >= 1)
             {
-                var half = stepSize/2;
-
-                if (half < 1)
-                    return;
-
                 for (var x = half; x < Config.Size; x += stepSize)
                 {
                     for (var y = half; y < Config.Size; y += stepSize)

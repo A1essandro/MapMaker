@@ -9,6 +9,9 @@ namespace Generators
 
         public float Persistence { get; private set; }
 
+        /// <summary>
+        /// Use like hash
+        /// </summary>
         public Random Random { get; private set; }
 
         public DiamondSquareConfig(byte sizePower, float persistence = 1, Random random = null)

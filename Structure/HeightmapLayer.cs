@@ -3,7 +3,14 @@
     public class HeightmapLayer : Layer<float>
     {
 
+        /// <summary>
+        /// Minimal height in layer
+        /// </summary>
         public float MinHeight { get; protected set; }
+
+        /// <summary>
+        /// Maximal height in layer
+        /// </summary>
         public float MaxHeight { get; protected set; }
 
         public HeightmapLayer(float[,] cells)
