@@ -87,7 +87,7 @@ namespace Generators
         /// <returns></returns>
         private float _getOffset(int stepSize)
         {
-            var offset = stepSize / Config.Size * Config.Random.Next(-Config.Size, Config.Size);
+            var offset = (float)stepSize / Config.Size * Config.Random.Next(-Config.Size, Config.Size);
             var sign = offset < 0 ? -1 : 1;
             return sign * (float)Math.Pow(Math.Abs(offset), 1 / Math.Sqrt(Config.Persistence));
         }
