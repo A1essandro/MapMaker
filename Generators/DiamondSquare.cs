@@ -36,20 +36,23 @@ namespace Generators
 
         private void _divide(int stepSize)
         {
-            var half = stepSize / 2;
-
-            if (half < 1)
-                return;
-
-            for (var x = half; x < Config.Size; x += stepSize)
+            while (true)
             {
-                for (var y = half; y < Config.Size; y += stepSize)
-                {
-                    _square(x, y, half, _getOffset(stepSize));
-                }
-            }
+                var half = stepSize/2;
 
-            _divide(half);
+                if (half < 1)
+                    return;
+
+                for (var x = half; x < Config.Size; x += stepSize)
+                {
+                    for (var y = half; y < Config.Size; y += stepSize)
+                    {
+                        _square(x, y, half, _getOffset(stepSize));
+                    }
+                }
+
+                stepSize = half;
+            }
         }
 
         private void _square(int x, int y, int size, float offset)

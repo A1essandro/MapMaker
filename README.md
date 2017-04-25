@@ -15,5 +15,15 @@ float persistence = 1.1;
 var config = new DiamondSquareConfig(sizePower, persistence /*optional*/);
 var generator = new DiamondSquare(config);
 
-float[,] a = generator.Generate();
+float[,] heights = generator.Generate();
+```
+
+You can also use an asynchronous call:
+
+```cs
+Task<float[,]> heightsTask = generator.Generate();
+
+/// .................Any actions.................
+
+float[,] heights = heightsTask.Result;
 ```
