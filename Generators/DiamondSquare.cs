@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace Generators
 {
@@ -16,7 +15,7 @@ namespace Generators
         /// Async implementation of Generate
         /// </summary>
         /// <returns>Task will returns double array of float</returns>
-        public override async Task<float[,]> GenerateAsync()
+        public override float[,] Generate()
         {
             Terra = new float[Config.Size, Config.Size];
 
@@ -26,10 +25,7 @@ namespace Generators
             Terra[last, 0] = _getOffset(Config.Size);
             Terra[last, last] = _getOffset(Config.Size);
 
-            await Task.Run(() =>
-            {
-                _divide(Config.Size);
-            });
+            _divide(Config.Size);
 
             return Terra;
         }

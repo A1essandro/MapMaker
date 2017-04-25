@@ -10,7 +10,7 @@ namespace Generators
         protected float[,] Terra;
         protected TConfig Config;
 
-	    protected GeneratorAlgorithm(TConfig config)
+        protected GeneratorAlgorithm(TConfig config)
         {
             Config = config;
         }
@@ -19,16 +19,21 @@ namespace Generators
         /// Async implementation of Generate
         /// </summary>
         /// <returns>Task will returns double array of float</returns>
-        public abstract Task<float[,]> GenerateAsync();
+        public async Task<float[,]> GenerateAsync()
+        {
+            await Task.Run(() =>
+            {
+                Generate();
+            });
+
+            return Terra;
+        }
 
         /// <summary>
         /// Non-async implementation of Generate
         /// </summary>
         /// <returns>Double array of float</returns>
-        public float[,] Generate()
-        {
-            return GenerateAsync().Result;
-        }
+        public abstract float[,] Generate();
 
     }
 
