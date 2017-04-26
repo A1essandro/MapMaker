@@ -1,4 +1,6 @@
-﻿namespace Structure.Impl
+﻿using System;
+
+namespace Structure.Impl
 {
     public class HeightmapLayer : Layer<float>
     {
@@ -34,6 +36,28 @@
                     MinHeight = cell.Data;
                 }
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cells"></param>
+        public static HeightmapLayer Mix(HeightmapLayer layer1, HeightmapLayer layer2)
+        {
+            var sizeX = Math.Min(layer1.SizeX, layer2.SizeX);
+            var sizeY = Math.Min(layer1.SizeY, layer2.SizeY);
+
+            var cells = new float[sizeX, sizeY];
+
+            for (var x = 0; x < sizeX; x++)
+            {
+                for (var y = 0; y < sizeY; y++)
+                {
+                    cells[x, y] = layer1.GetCell(x, y) + layer2.GetCell(x, y);
+                }
+            }
+
+            return new HeightmapLayer(cells);
         }
 
     }

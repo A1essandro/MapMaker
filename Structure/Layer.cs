@@ -34,6 +34,8 @@ namespace Structure
             return _cells[x, y];
         }
 
+        #region Impl
+
         /// <summary>
         /// IEnumerable implementation
         /// </summary>
@@ -54,6 +56,10 @@ namespace Structure
             return GetEnumerator();
         }
 
+        #endregion
+
+        #region CellInfo
+
         public class CellInfo
         {
 
@@ -71,6 +77,8 @@ namespace Structure
             public TCell Data { get; private set; }
 
         }
+
+        #endregion
 
     }
 }

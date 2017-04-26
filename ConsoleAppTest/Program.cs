@@ -4,7 +4,6 @@ using Structure;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Structure.Impl;
-using System;
 
 namespace ConsoleAppTest
 {
@@ -14,20 +13,28 @@ namespace ConsoleAppTest
         static void Main(string[] args)
         {
             //var dsConfig = new DiamondSquareConfig(12, 0.67f);
-            var pnConfig = new NoiseConfig(1000, 0.67);
-            var generator = new Noise(pnConfig);
+            var pnConfig1 = new NoiseConfig(2000, 0.7);
+            var generator1 = new Noise(pnConfig1);
+            var h1 = generator1.GenerateAsync();
+
+            var pnConfig2 = new NoiseConfig(2000, 0.25);
+            var generator2 = new Noise(pnConfig1);
+            var h2 = generator1.GenerateAsync();
+
+            var hlayer1 = new HeightmapLayer(h1.Result);
+            var hlayer2 = new HeightmapLayer(h2.Result);
+            var hLayer = HeightmapLayer.Mix(hlayer1, hlayer2);
 
             var stopWatch = new Stopwatch();
             stopWatch.Start();
-            var b = generator.Generate();
+            
             var m = new Map();
-            var hLayer = new HeightmapLayer(b);
             m.AddLayer<HeightmapLayer, float>(hLayer);
             var waterLine = WaterLayer.GetWaterlineFromPercentage(hLayer, 0.35f);
             var waterLayer = new WaterLayer(hLayer, waterLine);
             m.AddLayer<WaterLayer, bool>(waterLayer);
 
-            CreateImage(pnConfig, hLayer, waterLayer);
+            CreateImage(pnConfig1, hLayer, waterLayer);
 
             stopWatch.Stop();
             Debug.WriteLine(stopWatch.Elapsed);

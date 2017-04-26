@@ -10,8 +10,8 @@
 
 You can use class [DiamondSquare](Generators/DiamondSquare.cs) like in example:
 ```cs
-byte sizePower = 3; //result size = pow(2, sizePower) + 1
-float persistence = 1.1;
+var sizePower = 3; //result size = pow(2, sizePower) + 1
+var persistence = 1.1;
 var config = new DiamondSquareConfig(sizePower, persistence /*optional*/);
 var generator = new DiamondSquare(config);
 
@@ -33,8 +33,8 @@ float[,] heights = heightsTask.Result;
 You can use class [Noise](Generators/Noise.cs):
 
 ```cs
-byte size = 1000;
-float persistence = 0.67; //best results between 0.5 and 0.8
+var size = 1000;
+var persistence = 0.67; //best results between 0.5 and 0.8
 var config = new NoiseConfig(sizePower, persistence);
 var generator = new Noise(config);
 
