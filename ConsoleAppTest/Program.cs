@@ -12,8 +12,8 @@ namespace ConsoleAppTest
 
         static void Main(string[] args)
         {
-            var config = new DiamondSquareConfig(10, 2f);
-            var generator = new DiamondSquare(config);
+            var config = new DiamondSquareConfig(12, 0.67f);
+            var generator = new PerlinNoise(config);
 
             var stopWatch = new Stopwatch();
             stopWatch.Start();
