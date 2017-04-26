@@ -1,7 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using Generators;
-using Structure;
+using Structure.Impl;
 
 namespace Tests.Structure
 {
@@ -9,39 +10,32 @@ namespace Tests.Structure
     public class HeightmapLayerTest
     {
 
-        Task<float[,]> heightsTask;
+        private Task<float[,]> _heightsTask;
 
         [TestInitialize]
         public void Initialize()
         {
             var config = new DiamondSquareConfig(3);
             var generator = new DiamondSquare(config);
-            heightsTask = generator.GenerateAsync();
+            _heightsTask = generator.GenerateAsync();
         }
 
         [TestMethod]
         public void TestGetCell()
         {
-            var heights = heightsTask.GetAwaiter().GetResult();
+            var heights = _heightsTask.GetAwaiter().GetResult();
             var layer = new HeightmapLayer(heights);
 
-            Assert.AreEqual(heights[0, 1], layer.GetCell(0, 1));           
+            Assert.AreEqual(heights[0, 1], layer.GetCell(0, 1));
         }
 
         [TestMethod]
         public void TestMinHeight()
         {
-            var heights = heightsTask.GetAwaiter().GetResult();
-            var layer = new HeightmapLayer(heights);
+            var heights = _heightsTask.GetAwaiter();
+            var layer = new HeightmapLayer(heights.GetResult());
 
-            float minHeight = float.MaxValue;
-            foreach(var h in layer)
-            {
-                if(h < minHeight)
-                {
-                    minHeight = h;
-                }
-            }
+            var minHeight = layer.Select(h => h.Data).Concat(new[] {float.MaxValue}).Min();
 
             Assert.AreEqual(minHeight, layer.MinHeight);
         }
@@ -49,17 +43,10 @@ namespace Tests.Structure
         [TestMethod]
         public void TestMaxHeight()
         {
-            var heights = heightsTask.GetAwaiter().GetResult();
+            var heights = _heightsTask.GetAwaiter().GetResult();
             var layer = new HeightmapLayer(heights);
 
-            float maxHeight = float.MinValue;
-            foreach (var h in layer)
-            {
-                if (h > maxHeight)
-                {
-                    maxHeight = h;
-                }
-            }
+            var maxHeight = layer.Select(h => h.Data).Concat(new[] {float.MinValue}).Max();
 
             Assert.AreEqual(maxHeight, layer.MaxHeight);
         }

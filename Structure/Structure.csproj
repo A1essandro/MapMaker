@@ -37,7 +37,8 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HeightmapLayer.cs" />
+    <Compile Include="Impl\HeightmapLayer.cs" />
+    <Compile Include="Impl\WaterLayer.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
