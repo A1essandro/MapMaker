@@ -21,7 +21,7 @@ float[,] heights = generator.Generate();
 You can also use an asynchronous call:
 
 ```cs
-Task<float[,]> heightsTask = generator.Generate();
+Task<float[,]> heightsTask = generator.GenerateAsync();
 
 /// .................Any actions.................
 

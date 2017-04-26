@@ -2,7 +2,7 @@
 using Generators;
 using Structure;
 using System.Drawing;
-using System;
+using System.Drawing.Imaging;
 using Structure.Impl;
 
 namespace ConsoleAppTest
@@ -58,7 +58,32 @@ namespace ConsoleAppTest
                 }
             }
 
-            bmp.Save("test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+            var codec = GetEncoder(ImageFormat.Jpeg);
+            var filename = "test.jpg";
+            bmp.Save(filename, codec, GetEncoderParameters());
+        }
+
+        private static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        private static EncoderParameters GetEncoderParameters()
+        {
+            var myEncoder = Encoder.Quality;
+            var encoderParams = new EncoderParameters(1);
+            var myEncoderParameter = new EncoderParameter(myEncoder, 1000L);
+            encoderParams.Param[0] = myEncoderParameter;
+
+            return encoderParams;
         }
 
     }
