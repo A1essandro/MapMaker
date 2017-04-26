@@ -2,17 +2,18 @@
 
 namespace Generators
 {
-    public class PerlinNoise : GeneratorAlgorithm<DiamondSquareConfig>
+    public class Noise : GeneratorAlgorithm<NoiseConfig>
     {
 
-        public PerlinNoise(DiamondSquareConfig config) : base(config)
+        public Noise(NoiseConfig config) : base(config)
         {
             Terra = new float[Config.Size, Config.Size];
         }
 
         public override float[,] Generate()
         {
-            for (int k = 0; k < getOctaves(); k++)
+            var octaves = getOctaves();
+            for (int k = 0; k < octaves; k++)
             {
                 octave(k);
             }
@@ -26,7 +27,6 @@ namespace Generators
             var amp = Math.Pow(Config.Persistence, octave);
 
             float[,] arr = new float[freq + 1, freq + 1];
-
             for (var j = 0; j < freq + 1; j++)
             {
                 for (var i = 0; i < freq + 1; i++)
@@ -35,8 +35,8 @@ namespace Generators
                 }
             }
 
-            var nx = Config.Size / freq;
-            var ny = Config.Size / freq;
+            var nx = Config.Size / freq + 1;
+            var ny = Config.Size / freq + 1;
 
             for (var ky = 0; ky < Config.Size; ky++)
             {
@@ -44,8 +44,8 @@ namespace Generators
                 {
                     var i = kx / nx;
                     var j = ky / ny;
-                    var i1 = (i + 1) < arr.GetLength(0) ? (i + 1) : 0;
-                    var j1 = (j + 1) < arr.GetLength(1) ? (j + 1) : 0;
+                    var i1 = i + 1;
+                    var j1 = j + 1;
 
                     var dx0 = kx - i * nx;
                     var dx1 = nx - dx0;
@@ -56,7 +56,8 @@ namespace Generators
                             + arr[j1, i] * dx1 * dy0
                             + arr[j1, i1] * dx0 * dy0)
                         / (nx * ny);
-                    Terra[ky, kx] += z;
+
+                    Terra[kx, ky] += z;
                 }
             }
         }

@@ -4,6 +4,7 @@ using Structure;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Structure.Impl;
+using System;
 
 namespace ConsoleAppTest
 {
@@ -12,8 +13,9 @@ namespace ConsoleAppTest
 
         static void Main(string[] args)
         {
-            var config = new DiamondSquareConfig(12, 0.67f);
-            var generator = new PerlinNoise(config);
+            //var dsConfig = new DiamondSquareConfig(12, 0.67f);
+            var pnConfig = new NoiseConfig(1000, 0.67);
+            var generator = new Noise(pnConfig);
 
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -25,13 +27,13 @@ namespace ConsoleAppTest
             var waterLayer = new WaterLayer(hLayer, waterLine);
             m.AddLayer<WaterLayer, bool>(waterLayer);
 
-            CreateImage(config, hLayer, waterLayer);
+            CreateImage(pnConfig, hLayer, waterLayer);
 
             stopWatch.Stop();
             Debug.WriteLine(stopWatch.Elapsed);
         }
 
-        private static void CreateImage(DiamondSquareConfig config, HeightmapLayer layer, WaterLayer waterLayer)
+        private static void CreateImage(NoiseConfig config, HeightmapLayer layer, WaterLayer waterLayer)
         {
             var bmp = new Bitmap(config.Size, config.Size);
             var maxDepth = waterLayer.Waterline - layer.MinHeight;

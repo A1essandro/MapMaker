@@ -27,3 +27,18 @@ Task<float[,]> heightsTask = generator.GenerateAsync();
 
 float[,] heights = heightsTask.Result;
 ```
+
+
+#### Noise
+You can use class [Noise](Generators/Noise.cs):
+
+```cs
+byte size = 1000;
+float persistence = 0.67; //best results between 0.5 and 0.8
+var config = new NoiseConfig(sizePower, persistence);
+var generator = new Noise(config);
+
+float[,] heights = generator.Generate();
+//or
+Task<float[,]> heights = generator.GenerateAsync();
+```

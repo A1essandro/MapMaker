@@ -42,7 +42,7 @@ namespace Structure
         {
             for (var x = 0; x < _cells.GetLength(0); x++)
             {
-                for (var y = 0; y < _cells.GetLength(0); y++)
+                for (var y = 0; y < _cells.GetLength(1); y++)
                 {
                     yield return new CellInfo(x, y, GetCell(x, y));
                 }
