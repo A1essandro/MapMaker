@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Structure
@@ -32,6 +33,23 @@ namespace Structure
         public TCell GetCell(int x, int y)
         {
             return _cells[x, y];
+        }
+
+        public static TCell[,] Overlay(Layer<TCell> layer1, Layer<TCell> layer2, IOverlay<TCell> overlayer)
+        {
+            var sizeX = Math.Min(layer1.SizeX, layer2.SizeX);
+            var sizeY = Math.Min(layer1.SizeY, layer2.SizeY);
+            var cells = new TCell[sizeX, sizeY];
+
+            for (var x = 0; x < sizeX; x++)
+            {
+                for (var y = 0; y < sizeY; y++)
+                {
+                    cells[x, y] = overlayer.Overlay(layer1._cells[x, y], layer2._cells[x, y]);
+                }
+            }
+
+            return cells;
         }
 
         #region Impl
@@ -81,4 +99,5 @@ namespace Structure
         #endregion
 
     }
+
 }

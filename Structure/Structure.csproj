@@ -38,7 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\HeightmapLayer.cs" />
+    <Compile Include="Impl\OverlaySum.cs" />
     <Compile Include="Impl\WaterLayer.cs" />
+    <Compile Include="IOverlay.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

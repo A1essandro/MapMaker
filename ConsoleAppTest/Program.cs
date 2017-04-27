@@ -18,23 +18,24 @@ namespace ConsoleAppTest
             var h1 = generator1.GenerateAsync();
 
             var pnConfig2 = new NoiseConfig(2000, 0.25);
-            var generator2 = new Noise(pnConfig1);
-            var h2 = generator1.GenerateAsync();
+            var generator2 = new Noise(pnConfig2);
+            var h2 = generator2.GenerateAsync();
 
             var hlayer1 = new HeightmapLayer(h1.Result);
             var hlayer2 = new HeightmapLayer(h2.Result);
-            var hLayer = HeightmapLayer.Mix(hlayer1, hlayer2);
+            var hlayerCells = HeightmapLayer.Overlay(hlayer1, hlayer2, new OverlayFloatSum());
+            var hlayer = new HeightmapLayer(hlayerCells);
 
             var stopWatch = new Stopwatch();
             stopWatch.Start();
             
             var m = new Map();
-            m.AddLayer<HeightmapLayer, float>(hLayer);
-            var waterLine = WaterLayer.GetWaterlineFromPercentage(hLayer, 0.35f);
-            var waterLayer = new WaterLayer(hLayer, waterLine);
+            m.AddLayer<HeightmapLayer, float>(hlayer);
+            var waterLine = WaterLayer.GetWaterlineFromPercentage(hlayer, 0.35f);
+            var waterLayer = new WaterLayer(hlayer, waterLine);
             m.AddLayer<WaterLayer, bool>(waterLayer);
 
-            CreateImage(pnConfig1, hLayer, waterLayer);
+            CreateImage(pnConfig1, hlayer, waterLayer);
 
             stopWatch.Stop();
             Debug.WriteLine(stopWatch.Elapsed);
