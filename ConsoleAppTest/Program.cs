@@ -24,7 +24,9 @@ namespace ConsoleAppTest
             var hlayer1 = new HeightmapLayer(h1.Result);
             var hlayer2 = new HeightmapLayer(h2.Result);
             var hlayerCells = HeightmapLayer.Overlay(hlayer1, hlayer2, new OverlayFloatSum());
-            var hlayer = new HeightmapLayer(hlayerCells);
+            var hlayer = new HeightmapLayer(
+                HeightmapLayer.NormalizeHeights(
+                    new HeightmapLayer(hlayerCells)));
 
             var stopWatch = new Stopwatch();
             stopWatch.Start();

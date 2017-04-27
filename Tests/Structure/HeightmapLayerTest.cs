@@ -50,5 +50,6 @@ namespace Tests.Structure
 
             Assert.AreEqual(maxHeight, layer.MaxHeight);
         }
+
     }
 }
