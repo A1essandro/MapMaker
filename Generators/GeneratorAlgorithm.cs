@@ -21,11 +21,7 @@ namespace Generators
         /// <returns>Task will returns double array of float</returns>
         public async Task<float[,]> GenerateAsync()
         {
-            await Task.Run(() =>
-            {
-                Generate();
-            });
-
+            await Task.Factory.StartNew(Generate);
             return Terra;
         }
 
