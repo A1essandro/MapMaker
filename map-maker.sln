@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Structure", "Structure\Structure.csproj", "{B4FD94AA-DB29-4F00-B184-6D3DC1A73F84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ravine", "..\Ravine\Ravine.csproj", "{B45E5A4A-397F-432D-A9FE-4E5F6EB3F540}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ravine", "Ravine\Ravine.csproj", "{B45E5A4A-397F-432D-A9FE-4E5F6EB3F540}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
