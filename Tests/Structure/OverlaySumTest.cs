@@ -1,13 +1,13 @@
 ﻿using Generators;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Structure.Impl;
+using Xunit;
 
 namespace Tests.Structure
 {
-    [TestClass]
+
     public class OverlaySumTest
     {
-        [TestMethod]
+        [Fact]
         public void TestOverlay()
         {
             var pnConfig1 = new NoiseConfig(100, 0.7);
@@ -24,7 +24,7 @@ namespace Tests.Structure
             var hlayerCells = HeightmapLayer.Overlay(hlayer1, hlayer2, new OverlayFloatSum());
             var hlayer = new HeightmapLayer(hlayerCells);
 
-            Assert.AreEqual(h1.Result[50, 50] + hlayer2.GetCell(50, 50), hlayer.GetCell(50, 50));
+            Assert.Equal(h1.Result[50, 50] + hlayer2.GetCell(50, 50), hlayer.GetCell(50, 50));
         }
     }
 }

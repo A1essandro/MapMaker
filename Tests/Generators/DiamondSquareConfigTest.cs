@@ -1,66 +1,21 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Generators;
+﻿using Generators;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Tests.Generators
 {
 
-    [TestClass]
     public class DiamondSquareConfigTest
     {
 
-        #region Context
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
-        [TestMethod]
+        [Fact]
         public void TestSize()
         {
             var config = new DiamondSquareConfig(3);
-            Assert.AreEqual(9, config.Size);
+            Assert.Equal(9, config.Size);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestRandomSeed()
         {
             var configEq1 = new DiamondSquareConfig(3, 1, new System.Random(5));
@@ -75,17 +30,11 @@ namespace Tests.Generators
             var mapEq2 = generatorEq2.Generate();
             var mapnotEq = generatorNotEq.GenerateAsync();
 
-            Assert.AreEqual(mapEq2[1, 2],
+            Assert.Equal(mapEq2[1, 2],
                 mapEq1.GetAwaiter().GetResult()[1, 2]);
 
-            Assert.AreNotEqual(mapnotEq.GetAwaiter().GetResult()[1, 2],
+            Assert.NotEqual(mapnotEq.GetAwaiter().GetResult()[1, 2],
                 mapEq1.GetAwaiter().GetResult()[1, 2]);
-
-            //Note: if you use one DiamondSquareConfig reference for different generators - it will not work:
-            //var config = new DiamondSquareConfig(3, 1, new System.Random(5));
-            //var generator1 = new DiamondSquare(config);
-            //var generator2 = new DiamondSquare(config);
-            // generator1.Generate()[x, y] != generator2.Generate()[x, y] !!!;
         }
     }
 }
