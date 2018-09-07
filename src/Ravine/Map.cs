@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using VectorClass;
+using Epic.Vectors;
 
 namespace Ravine
 {
@@ -17,10 +17,10 @@ namespace Ravine
             _analizer = new Analizer(this);
         }
 
-        public IDictionary<Vector2D_Int, double> GetNear(Vector2D_Int position)
+        public IDictionary<Vector<int>, double> GetNear(Vector<int> position)
         {
-            var result = new Dictionary<Vector2D_Int, double>();
-            var unprepared = new Dictionary<Vector2D_Int, dynamic>();
+            var result = new Dictionary<Vector<int>, double>();
+            var unprepared = new Dictionary<Vector<int>, dynamic>();
             dynamic sum = 0;
 
             for (var diffX = -1; diffX <= 1; diffX++)
@@ -39,7 +39,7 @@ namespace Ravine
                     var diff = current - near;
                     if (diff > 0)
                     {
-                        result.Add(new Vector2D_Int(position.X, position.Y), diff);
+                        result.Add(new Vector<int>(position.X, position.Y), diff);
                         sum += diff;
                     }
 
