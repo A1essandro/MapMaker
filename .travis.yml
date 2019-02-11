@@ -1,0 +1,17 @@
+language: csharp
+
+dotnet: 2.1.4
+mono: none
+sudo: false
+
+env:
+    global:
+        - DOTNET_CLI_TELEMETRY_OPTOUT: true
+        - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+script:
+    - dotnet build MapMaker.sln -c Release
+    - dotnet test -c Release --no-build Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+after_script:
+    - bash <(curl -s https://codecov.io/bash)
