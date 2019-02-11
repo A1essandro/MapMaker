@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Epic.Vectors;
 
 namespace Ravine
 {
@@ -17,10 +16,10 @@ namespace Ravine
             _analizer = new Analizer(this);
         }
 
-        public IDictionary<Vector<int>, double> GetNear(Vector<int> position)
+        public IDictionary<Vector, double> GetNear(Vector position)
         {
-            var result = new Dictionary<Vector<int>, double>();
-            var unprepared = new Dictionary<Vector<int>, dynamic>();
+            var result = new Dictionary<Vector, double>();
+            var unprepared = new Dictionary<Vector, dynamic>();
             dynamic sum = 0;
 
             for (var diffX = -1; diffX <= 1; diffX++)
@@ -39,7 +38,7 @@ namespace Ravine
                     var diff = current - near;
                     if (diff > 0)
                     {
-                        result.Add(new Vector<int>(position.X, position.Y), diff);
+                        result.Add(new Vector(position.X, position.Y), diff);
                         sum += diff;
                     }
 

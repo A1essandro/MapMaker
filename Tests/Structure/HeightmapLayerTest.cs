@@ -12,7 +12,7 @@ namespace Tests.Structure
 
         private Task<float[,]> _heightsTask;
 
-        public void Initialize()
+        public HeightmapLayerTest()
         {
             var config = new DiamondSquareConfig(3);
             var generator = new DiamondSquare(config);

@@ -4,6 +4,5 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0"/>
-    <PackageReference Include="Epic.Vectors" Version="*"/>
   </ItemGroup>
 </Project>

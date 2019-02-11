@@ -1,5 +1,4 @@
 ﻿using System;
-using Epic.Vectors;
 
 namespace Ravine
 {
@@ -8,22 +7,22 @@ namespace Ravine
 
         public double Mass { get; private set; }
 
-        public Vector<int> Position { get; private set; } 
+        public Vector Position { get; private set; } 
 
-        public Vector<int> Speed { get; private set; }
+        public Vector Speed { get; private set; }
 
         public double MudMass { get; private set; }
 
-        public WaterMass(double mass, Vector<int> position)
+        public WaterMass(double mass, Vector position)
         {
             Mass = mass;
             Position = position;
-            Speed = new Vector<int>(0, 0);
+            Speed = new Vector(0, 0);
             MudMass = 0;
         }
 
         public WaterMass(double mass, int x, int y) 
-            : this(mass, new Vector<int>(x, y))
+            : this(mass, new Vector(x, y))
         {
 
         }
@@ -37,7 +36,7 @@ namespace Ravine
         {
             var x = (Speed.X / Math.Abs(Speed.Y)) / Math.Abs(Speed.X / Speed.Y); // must be in set {-1, 0, 1}
             var y = (Speed.Y / Math.Abs(Speed.X)) / Math.Abs(Speed.Y / Speed.X); // must be in set {-1, 0, 1}
-            Position += new Vector<int>(y, x);
+            Position += new Vector(y, x);
         }
 
         public static WaterMass operator +(WaterMass water1, WaterMass water2)
