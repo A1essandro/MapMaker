@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Ravine
+namespace MapMaker.Ravine
 {
     public class Map<T>
     {
@@ -26,7 +26,7 @@ namespace Ravine
             {
                 for (var diffY = -1; diffY <= 1; diffY++)
                 {
-                    if ((diffX == 0 && diffY == 0) 
+                    if ((diffX == 0 && diffY == 0)
                         || diffX + position.X < 0
                         || diffY + position.Y < 0
                         || diffX + position.X >= _analizer.SizeX

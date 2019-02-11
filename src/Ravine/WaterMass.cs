@@ -1,13 +1,14 @@
 ﻿using System;
 
-namespace Ravine
+namespace MapMaker.Ravine
 {
-    class WaterMass
+    public class WaterMass
     {
 
         public double Mass { get; private set; }
 
-        public Vector Position { get; private set; } 
+        [Obsolete]
+        public Vector Position { get; private set; }
 
         public Vector Speed { get; private set; }
 
@@ -21,7 +22,7 @@ namespace Ravine
             MudMass = 0;
         }
 
-        public WaterMass(double mass, int x, int y) 
+        public WaterMass(double mass, int x, int y)
             : this(mass, new Vector(x, y))
         {
 
