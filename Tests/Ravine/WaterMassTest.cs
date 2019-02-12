@@ -8,7 +8,7 @@ using Xunit;
 namespace Tests.Ravine
 {
 
-    class WaterMassTest
+    public class WaterMassTest
     {
         private double[,] _map = new double[,] {
                 { 0.5, 0.5, 0.5, 0.5, 0.5 },
@@ -21,8 +21,14 @@ namespace Tests.Ravine
         [Fact]
         public void PlatoTest()
         {
-            var initial = new WaterMass(0.1, new Vector(2, 2));
+            var context = new WaterContext(_map);
+            var drop = new WaterMass(0.1);
 
+            context.AddDrop(drop, (2, 2));
+            context.Step();
+            var drops = context.Drops;
+
+            Assert.Equal(4, drops.Count);
         }
 
     }

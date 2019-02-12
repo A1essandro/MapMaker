@@ -1,7 +1,10 @@
 using System;
+using System.Diagnostics;
 
 namespace MapMaker.Ravine
 {
+
+    [DebuggerDisplay("({X}, {Y})")]
     public struct Vector
     {
 
