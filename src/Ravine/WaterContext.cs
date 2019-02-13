@@ -21,6 +21,8 @@ namespace MapMaker.Ravine
             };
         };
 
+        public readonly static Func<double, double> DefaultAbsorbtion = oldVal => oldVal - 0.015; //TODO: Magic constant...
+
         private readonly double[,] _heightmap;
         private readonly IDictionary<WaterDrop, Vector> _drops = new Dictionary<WaterDrop, Vector>();
 
@@ -32,10 +34,11 @@ namespace MapMaker.Ravine
 
         public void AddDrop(WaterDrop drop, Vector position) => _drops.Add(drop, position);
 
-        public void Step(Func<Vector, IEnumerable<Vector>> neighborsGetter = null)
+        public void Step(Func<Vector, IEnumerable<Vector>> neighborsGetter = null, Func<double, double> absobtion = null)
         {
             PropagateWater(neighborsGetter ?? DefaultNeighborsGetter);
             Merge();
+            Absorb(absobtion ?? DefaultAbsorbtion);
         }
 
         /// <summary>
@@ -75,6 +78,21 @@ namespace MapMaker.Ravine
                 foreach (var key in unmerged)
                     _drops.Remove(key);
                 _drops.Add(merged, group.Key);
+            }
+        }
+
+        /// <summary>
+        /// Step of water absorption into the soil 
+        /// </summary>
+        /// <param name="absobtion"></param>
+        public void Absorb(Func<double, double> absobtion)
+        {
+            var drops = _drops.ToArray();
+            _drops.Clear();
+            foreach (var drop in drops)
+            {
+                var newMass = DefaultAbsorbtion(drop.Key.Mass);
+                _drops.Add(new WaterDrop(newMass), drop.Value);
             }
         }
 
