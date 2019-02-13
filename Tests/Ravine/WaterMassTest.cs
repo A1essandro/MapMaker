@@ -21,7 +21,8 @@ namespace Tests.Ravine
         [Fact]
         public void PropagateTest()
         {
-            var context = new WaterContext(_map);
+            var propagator = new Propagator(Propagator.DefaultNeighborsGetter);
+            var context = new WaterContext(_map, propagator);
             var drop = new WaterDrop(0.1);
 
             context.AddDrop(drop, (2, 2));
@@ -34,7 +35,8 @@ namespace Tests.Ravine
         [Fact]
         public void MergeTest()
         {
-            var context = new WaterContext(_map);
+            var propagator = new Propagator(Propagator.DefaultNeighborsGetter);
+            var context = new WaterContext(_map, propagator);
             var drop = new WaterDrop(0.1);
 
             context.AddDrop(drop, (2, 2));
