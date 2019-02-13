@@ -21,22 +21,23 @@ namespace MapMaker.Ravine
             };
         };
 
-        private readonly double[,] _heigthmap;
+        private readonly double[,] _heightmap;
         private readonly IDictionary<WaterMass, Vector> _drops = new Dictionary<WaterMass, Vector>();
+        public IDictionary<WaterMass, Vector> Drops => _drops;
 
         public void AddDrop(WaterMass drop, (int, int) p) => AddDrop(drop, new Vector(p.Item1, p.Item2));
 
-        public IDictionary<WaterMass, Vector> Drops => _drops;
-
-        public WaterContext(double[,] heigthmap) => _heigthmap = heigthmap;
+        public WaterContext(double[,] heightmap) => _heightmap = heightmap;
 
         public void AddDrop(WaterMass drop, Vector position) => _drops.Add(drop, position);
 
         public void Step(Func<Vector, IEnumerable<Vector>> neighborsGetter = null)
         {
-            if (neighborsGetter == null)
-                neighborsGetter = DefaultNeighborsGetter;
+            PropagateWater(neighborsGetter ?? DefaultNeighborsGetter);
+        }
 
+        public void PropagateWater(Func<Vector, IEnumerable<Vector>> neighborsGetter)
+        {
             var newDrops = new ConcurrentDictionary<WaterMass, Vector>();
 
             Parallel.ForEach(_drops, drop =>
@@ -52,7 +53,11 @@ namespace MapMaker.Ravine
                     newDrops.TryAdd(new WaterMass(dropObj.Mass * watermassFactor), targetCell.Key);
                 }
             });
+            _peplaceDrops(newDrops);
+        }
 
+        private void _peplaceDrops(IDictionary<WaterMass, Vector> newDrops)
+        {
             _drops.Clear();
             foreach (var drop in newDrops)
             {
@@ -91,10 +96,10 @@ namespace MapMaker.Ravine
             return moveRanks;
         }
 
-        private double _getHeight(Vector pos) => _heigthmap[pos.X, pos.Y];
+        private double _getHeight(Vector pos) => _heightmap[pos.X, pos.Y];
 
         private bool _isInMap(Vector pos) =>
-            pos.X >= 0 && pos.Y >= 0 && pos.X < _heigthmap.GetLength(0) && pos.Y < _heigthmap.GetLength(1);
+            pos.X >= 0 && pos.Y >= 0 && pos.X < _heightmap.GetLength(0) && pos.Y < _heightmap.GetLength(1);
 
     }
 }
