@@ -5,7 +5,7 @@ namespace MapMaker.Ravine
 {
 
     [DebuggerDisplay("M:{Mass}, V({Speed.X},{Speed.Y})")]
-    public class WaterMass
+    public class WaterDrop
     {
 
         public double Mass { get; set; }
@@ -14,16 +14,16 @@ namespace MapMaker.Ravine
 
         public double MudMass { get; set; }
 
-        public WaterMass(double mass)
+        public WaterDrop(double mass)
         {
             Mass = mass;
             Speed = new Vector(0, 0);
             MudMass = 0;
         }
 
-        public static WaterMass operator +(WaterMass water1, WaterMass water2)
+        public static WaterDrop operator +(WaterDrop water1, WaterDrop water2)
         {
-            var result = new WaterMass(water1.Mass + water2.Mass)
+            var result = new WaterDrop(water1.Mass + water2.Mass)
             {
                 Speed = water1.Speed + water2.Speed,
                 MudMass = water1.MudMass + water2.MudMass

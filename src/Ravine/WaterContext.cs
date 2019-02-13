@@ -22,15 +22,15 @@ namespace MapMaker.Ravine
         };
 
         private readonly double[,] _heightmap;
-        private readonly IDictionary<WaterMass, Vector> _drops = new Dictionary<WaterMass, Vector>();
+        private readonly IDictionary<WaterDrop, Vector> _drops = new Dictionary<WaterDrop, Vector>();
 
-        public IDictionary<WaterMass, Vector> Drops => _drops;
+        public IDictionary<WaterDrop, Vector> Drops => _drops;
 
-        public void AddDrop(WaterMass drop, (int, int) p) => AddDrop(drop, new Vector(p.Item1, p.Item2));
+        public void AddDrop(WaterDrop drop, (int, int) p) => AddDrop(drop, new Vector(p.Item1, p.Item2));
 
         public WaterContext(double[,] heightmap) => _heightmap = heightmap;
 
-        public void AddDrop(WaterMass drop, Vector position) => _drops.Add(drop, position);
+        public void AddDrop(WaterDrop drop, Vector position) => _drops.Add(drop, position);
 
         public void Step(Func<Vector, IEnumerable<Vector>> neighborsGetter = null)
         {
@@ -38,9 +38,13 @@ namespace MapMaker.Ravine
             Merge();
         }
 
+        /// <summary>
+        /// Propagation drops on the map
+        /// </summary>
+        /// <param name="neighborsGetter"></param>
         public void PropagateWater(Func<Vector, IEnumerable<Vector>> neighborsGetter)
         {
-            var newDrops = new ConcurrentDictionary<WaterMass, Vector>();
+            var newDrops = new ConcurrentDictionary<WaterDrop, Vector>();
 
             Parallel.ForEach(_drops, drop =>
             {
@@ -52,15 +56,19 @@ namespace MapMaker.Ravine
                 foreach (var targetCell in moveFactors)
                 {
                     var watermassFactor = targetCell.Value;
-                    newDrops.TryAdd(new WaterMass(dropObj.Mass * watermassFactor), targetCell.Key);
+                    newDrops.TryAdd(new WaterDrop(dropObj.Mass * watermassFactor), targetCell.Key);
                 }
             });
             _peplaceDrops(newDrops);
         }
 
+        /// <summary>
+        /// Merge all drops are in the same cells
+        /// </summary>
         public void Merge()
         {
-            foreach (var group in _drops.GroupBy(x => x.Value).Where(x => x.Count() > 1).ToArray())
+            var groups = _drops.GroupBy(x => x.Value).Where(x => x.Count() > 1).ToArray();
+            foreach (var group in groups)
             {
                 var unmerged = group.Select(x => x.Key).ToArray();
                 var merged = unmerged.Aggregate((total, next) => total + next);
@@ -70,7 +78,7 @@ namespace MapMaker.Ravine
             }
         }
 
-        private void _peplaceDrops(IDictionary<WaterMass, Vector> newDrops)
+        private void _peplaceDrops(IDictionary<WaterDrop, Vector> newDrops)
         {
             _drops.Clear();
             foreach (var drop in newDrops)
@@ -91,7 +99,7 @@ namespace MapMaker.Ravine
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Dictionary<Vector, double> _getMoveRanks(Func<Vector, IEnumerable<Vector>> neighborsGetter, Vector currentDropPosition, WaterMass dropObj)
+        private Dictionary<Vector, double> _getMoveRanks(Func<Vector, IEnumerable<Vector>> neighborsGetter, Vector currentDropPosition, WaterDrop dropObj)
         {
             var moveRanks = new Dictionary<Vector, double>();
             foreach (var targetCell in neighborsGetter(currentDropPosition))
