@@ -10,7 +10,7 @@ namespace MapMaker.Ravine
     public class WaterContext
     {
 
-        private readonly static Func<Vector, IEnumerable<Vector>> DefaultNeighborsGetter = (Vector pos) =>
+        public readonly static Func<Vector, IEnumerable<Vector>> DefaultNeighborsGetter = (Vector pos) =>
         {
             return new List<Vector>
             {
@@ -23,6 +23,7 @@ namespace MapMaker.Ravine
 
         private readonly double[,] _heightmap;
         private readonly IDictionary<WaterMass, Vector> _drops = new Dictionary<WaterMass, Vector>();
+
         public IDictionary<WaterMass, Vector> Drops => _drops;
 
         public void AddDrop(WaterMass drop, (int, int) p) => AddDrop(drop, new Vector(p.Item1, p.Item2));
@@ -34,6 +35,7 @@ namespace MapMaker.Ravine
         public void Step(Func<Vector, IEnumerable<Vector>> neighborsGetter = null)
         {
             PropagateWater(neighborsGetter ?? DefaultNeighborsGetter);
+            Merge();
         }
 
         public void PropagateWater(Func<Vector, IEnumerable<Vector>> neighborsGetter)
@@ -54,6 +56,18 @@ namespace MapMaker.Ravine
                 }
             });
             _peplaceDrops(newDrops);
+        }
+
+        public void Merge()
+        {
+            foreach (var group in _drops.GroupBy(x => x.Value).Where(x => x.Count() > 1).ToArray())
+            {
+                var unmerged = group.Select(x => x.Key).ToArray();
+                var merged = unmerged.Aggregate((total, next) => total + next);
+                foreach (var key in unmerged)
+                    _drops.Remove(key);
+                _drops.Add(merged, group.Key);
+            }
         }
 
         private void _peplaceDrops(IDictionary<WaterMass, Vector> newDrops)

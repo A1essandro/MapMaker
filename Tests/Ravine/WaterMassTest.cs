@@ -19,16 +19,33 @@ namespace Tests.Ravine
             };
 
         [Fact]
-        public void PlatoTest()
+        public void PropagateTest()
         {
             var context = new WaterContext(_map);
             var drop = new WaterMass(0.1);
 
             context.AddDrop(drop, (2, 2));
-            context.Step();
+            context.PropagateWater(WaterContext.DefaultNeighborsGetter);
             var drops = context.Drops;
 
             Assert.Equal(4, drops.Count);
+        }
+
+        [Fact]
+        public void MergeTest()
+        {
+            var context = new WaterContext(_map);
+            var drop = new WaterMass(0.1);
+
+            context.AddDrop(drop, (2, 2));
+            context.PropagateWater(WaterContext.DefaultNeighborsGetter);
+            context.PropagateWater(WaterContext.DefaultNeighborsGetter);
+            var dropsBefore = context.Drops.ToDictionary(x => x.Key, x => x.Value);
+            context.Merge();
+            var dropsAfter = context.Drops.ToDictionary(x => x.Key, x => x.Value); //TODO: failure
+            var points = dropsAfter.Select(x => x.Value);
+
+            Assert.Equal(16, dropsBefore.Count);
         }
 
     }
